@@ -1,6 +1,8 @@
-import { Text } from '@react-navigation/elements';
-import { Link, Stack } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
+
+import { Link, Stack } from 'expo-router';
+
+import { Text } from '@react-navigation/elements';
 
 export default function NotFoundScreen() {
   return (

@@ -1,5 +1,6 @@
-import Foundation from '@expo/vector-icons/Foundation';
 import { Link, Stack } from 'expo-router';
+
+import Foundation from '@expo/vector-icons/Foundation';
 
 import { colors } from '@/constants';
 

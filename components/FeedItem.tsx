@@ -1,5 +1,6 @@
-import { Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+
+import { Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 
 import { colors } from '@/constants';
 import { Post } from '@/types';
