@@ -2,56 +2,78 @@
 const { defineConfig } = require('eslint/config');
 const expoConfig = require('eslint-config-expo/flat');
 const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
-const simpleImportSort = require('eslint-plugin-simple-import-sort');
 
 module.exports = defineConfig([
   expoConfig,
   eslintPluginPrettierRecommended,
   {
-    ignores: [
-      // Build directories
-      'dist/*',
-      'build/*',
-      'web-build/*',
-
-      // Expo specific (not covered by default dot-file ignoring)
-      'expo-env.d.ts',
-
-      // Package manager files
-      'package-lock.json',
-      'yarn.lock',
-      'pnpm-lock.yaml',
-
-      // Environment files
-      '.env',
-      '.env.*',
-
-      // Logs
-      '*.log',
-      'npm-debug.log*',
-      'yarn-debug.log*',
-      'yarn-error.log*',
-
-      // IDE/Editor temporary files (some are not dot-files)
-      '*.swp',
-      '*.swo',
-
-      // OS files (some are not dot-files)
-      'Thumbs.db',
-
-      // Temporary files
-      'tmp/*',
-      'temp/*',
-    ],
+    rules: {
+      // Import 순서 정렬
+      'import/order': [
+        'warn',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'unknown',
+            'internal',
+            ['parent', 'sibling'],
+            'index',
+            'type',
+          ],
+          'newlines-between': 'always',
+          pathGroups: [
+            {
+              pattern: 'react',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: 'react-native',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: 'expo-*',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: '@expo/**',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: '@react-navigation/**',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: '@/**',
+              group: 'internal',
+              position: 'before',
+            },
+          ],
+          pathGroupsExcludedImportTypes: ['builtin'],
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
+    },
   },
   {
-    files: ['**/*.{js,jsx,ts,tsx}'],
-    plugins: {
-      'simple-import-sort': simpleImportSort,
-    },
-    rules: {
-      'simple-import-sort/imports': 'warn',
-      'simple-import-sort/exports': 'warn',
-    },
+    ignores: [
+      'dist/*',
+      '.expo/*',
+      'expo-env.d.ts',
+      'web-build/*',
+      '.expo-shared/*',
+      'ios/build/*',
+      'android/build/*',
+      'android/app/build/*',
+      'node_modules/*',
+    ],
   },
 ]);
