@@ -8,16 +8,10 @@ export default function AuthScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image
-          source={require('@/assets/images/logo.png')}
-          style={styles.logo}
-        />
+        <Image source={require('@/assets/images/logo.png')} style={styles.logo} />
       </View>
       <View style={styles.buttonContainer}>
-        <CustomButton
-          label="이메일 로그인"
-          onPress={() => router.push('/auth/login')}
-        />
+        <CustomButton label="이메일 로그인" onPress={() => router.push('/auth/login')} />
         <Link href={'/auth/signup'} style={styles.signupText}>
           이메일로 가입하기
         </Link>

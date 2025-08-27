@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TextInputProps,
-  View,
-} from 'react-native';
+import { StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
 
 import { colors } from '@/constants';
 
@@ -13,24 +7,16 @@ interface InputFieldProps extends TextInputProps {
   variant?: 'filled' | 'standard' | 'outlined';
 }
 
-export function InputField({
-  label,
-  variant = 'filled',
-  ...props
-}: InputFieldProps) {
+export const InputField = ({ label, variant = 'filled', ...props }: InputFieldProps) => {
   return (
     <View>
       {label && <Text style={styles.label}>{label}</Text>}
       <View style={[styles.container, styles[variant]]}>
-        <TextInput
-          placeholderTextColor={colors.GRAY_500}
-          style={styles.input}
-          {...props}
-        />
+        <TextInput placeholderTextColor={colors.GRAY_500} style={styles.input} {...props} />
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

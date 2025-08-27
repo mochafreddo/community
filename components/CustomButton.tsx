@@ -8,12 +8,12 @@ interface CustomButtonProps extends PressableProps {
   variant?: 'filled';
 }
 
-export function CustomButton({
+export const CustomButton = ({
   label,
   size = 'large',
   variant = 'filled',
   ...props
-}: CustomButtonProps) {
+}: CustomButtonProps) => {
   return (
     <Pressable
       style={({ pressed }) => [
@@ -27,7 +27,7 @@ export function CustomButton({
       <Text style={styles[variant]}>{label}</Text>
     </Pressable>
   );
-}
+};
 
 const styles = StyleSheet.create({
   containter: {

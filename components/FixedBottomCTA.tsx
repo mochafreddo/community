@@ -11,7 +11,7 @@ interface FixedBottomCTAProps {
   onPress: () => void;
 }
 
-export function FixedBottomCTA({ label, onPress }: FixedBottomCTAProps) {
+export const FixedBottomCTA = ({ label, onPress }: FixedBottomCTAProps) => {
   const inset = useSafeAreaInsets();
 
   return (
@@ -19,7 +19,7 @@ export function FixedBottomCTA({ label, onPress }: FixedBottomCTAProps) {
       <CustomButton label={label} onPress={onPress} />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   fixed: {

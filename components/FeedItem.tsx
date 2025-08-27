@@ -5,16 +5,24 @@ import { Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 import { colors } from '@/constants';
 import { Post } from '@/types';
 
+import { Profile } from './Profile';
+
 interface FeedItemProps {
   post: Post;
 }
 
-export function FeedItem({ post }: FeedItemProps) {
+export const FeedItem = ({ post }: FeedItemProps) => {
   const isLiked = true;
 
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
+        <Profile
+          imageUri={post.author.imageUri}
+          nickname={post.author.nickname}
+          createdAt={post.createdAt}
+          onPress={() => {}}
+        />
         <Text style={styles.title}>{post.title}</Text>
         <Text numberOfLines={3} style={styles.description}>
           {post.description}
@@ -27,9 +35,7 @@ export function FeedItem({ post }: FeedItemProps) {
             size={16}
             color={isLiked ? colors.ORANGE_600 : colors.BLACK}
           />
-          <Text style={isLiked ? styles.activeMenuText : styles.menuText}>
-            1
-          </Text>
+          <Text style={isLiked ? styles.activeMenuText : styles.menuText}>1</Text>
         </Pressable>
         <Pressable style={styles.menu}>
           <MaterialCommunityIcons
@@ -46,7 +52,7 @@ export function FeedItem({ post }: FeedItemProps) {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: { backgroundColor: colors.WHITE },
