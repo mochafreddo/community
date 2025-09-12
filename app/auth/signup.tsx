@@ -6,16 +6,27 @@ import { EmailInput } from '@/components/EmailInput';
 import { FixedBottomCTA } from '@/components/FixedBottomCTA';
 import { PasswordConfirmInput } from '@/components/PasswordConfirmInput';
 import { PasswordInput } from '@/components/PasswordInput';
+import { useAuth } from '@/hooks/queries/useAuth';
 
-type FormValues = { email: string; password: string; passwordConfirm: string };
+type FormValues = {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+};
 
 export default function SignupScreen() {
+  const { signupMutation } = useAuth();
   const signupForm = useForm<FormValues>({
-    defaultValues: { email: '', password: '', passwordConfirm: '' },
+    defaultValues: {
+      email: '',
+      password: '',
+      passwordConfirm: '',
+    },
   });
 
   const onSubmit = (formValues: FormValues) => {
-    console.log('formValues :>> ', formValues);
+    const { email, password } = formValues;
+    signupMutation.mutate({ email, password });
   };
 
   return (
@@ -31,5 +42,9 @@ export default function SignupScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, margin: 16, gap: 16 },
+  container: {
+    flex: 1,
+    margin: 16,
+    gap: 16,
+  },
 });

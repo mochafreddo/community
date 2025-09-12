@@ -4,7 +4,7 @@ import { InputField } from './InputField';
 
 export const PasswordConfirmInput = () => {
   const { control } = useFormContext();
-  const { password } = useWatch({ control, name: 'password' });
+  const password = useWatch({ control, name: 'password' });
 
   return (
     <Controller
