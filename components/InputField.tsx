@@ -17,7 +17,14 @@ export const InputField = forwardRef<TextInput, InputFieldProps>(function InputF
   return (
     <View>
       {label && <Text style={styles.label}>{label}</Text>}
-      <View style={[styles.container, styles[variant], Boolean(error) && styles.inputError]}>
+      <View
+        style={[
+          styles.container,
+          styles[variant],
+          props.multiline && styles.multiLine,
+          Boolean(error) && styles.inputError,
+        ]}
+      >
         <TextInput
           ref={ref}
           placeholderTextColor={colors.GRAY_500}
@@ -49,4 +56,5 @@ const styles = StyleSheet.create({
   input: { fontSize: 16, padding: 0, flex: 1 },
   error: { fontSize: 12, marginTop: 5, color: colors.RED_500 },
   inputError: { backgroundColor: colors.RED_100 },
+  multiLine: { alignItems: 'flex-start', paddingVertical: 10, height: 200 },
 });
