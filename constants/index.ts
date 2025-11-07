@@ -1,4 +1,4 @@
-const colors = {
+export const colors = {
   BLACK: '#000',
   GRAY_100: '#F6F6F6',
   GRAY_200: '#E2E8F0',
@@ -15,4 +15,9 @@ const colors = {
   WHITE: '#FFF',
 };
 
-export { colors };
+export const queryKeys = {
+  AUTH: 'auth',
+  GET_ME: 'getMe',
+  GET_POSTS: 'getPosts',
+  POST: 'post',
+};
