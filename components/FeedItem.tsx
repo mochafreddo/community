@@ -1,10 +1,13 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { router } from 'expo-router';
+
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 
 import { colors } from '@/constants';
 import { useAuth } from '@/hooks/queries/useAuth';
+import { useDeletePost } from '@/hooks/queries/useDeletePost';
 import { Post } from '@/types';
 
 import { Profile } from './Profile';
@@ -18,6 +21,7 @@ export const FeedItem = ({ post }: FeedItemProps) => {
   const likeUsers = post.likes?.map((like) => Number(like.userId));
   const isLiked = likeUsers?.includes(Number(auth.id));
   const { showActionSheetWithOptions } = useActionSheet();
+  const deletePost = useDeletePost();
 
   const handlePressOption = () => {
     const options = ['삭제', '수정', '취소'];
@@ -29,8 +33,10 @@ export const FeedItem = ({ post }: FeedItemProps) => {
       (selectedIndex?: number) => {
         switch (selectedIndex) {
           case destructiveButtonIndex:
+            deletePost.mutate(post.id);
             break;
           case 1:
+            router.push(`/post/update/${post.id}`);
             break;
           case cancelButtonIndex:
             break;
