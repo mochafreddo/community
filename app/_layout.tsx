@@ -8,7 +8,7 @@ import { Stack } from 'expo-router';
 import { QueryClientProvider } from '@tanstack/react-query';
 import Toast from 'react-native-toast-message';
 
-import queryClient from '@/api/queryClient';
+import { queryClient } from '@/api/queryClient';
 import { useAuth } from '@/hooks/queries/useAuth';
 
 export default function RootLayout() {

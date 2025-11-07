@@ -1,22 +1,52 @@
-import { StyleSheet, View } from 'react-native';
+import { useCallback, useLayoutEffect } from 'react';
+
+import { StyleSheet } from 'react-native';
+
+import { useNavigation } from 'expo-router';
 
 import { FormProvider, useForm } from 'react-hook-form';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+import { CustomButton } from '@/components/CustomButton';
 import { DescriptionInput } from '@/components/DescriptionInput';
 import { TitleInput } from '@/components/TitleInput';
+import { useCreatePost } from '@/hooks/queries/useCreatePost';
+import { ImageUri } from '@/types';
 
-type FormValues = { title: string; description: string };
+type FormValues = { title: string; description: string; imageUris: ImageUri[] };
 
 export default function PostWriteScreen() {
-  const postForm = useForm<FormValues>({ defaultValues: { title: '', description: '' } });
+  const navigation = useNavigation();
+  const createPost = useCreatePost();
+  const postForm = useForm<FormValues>({
+    defaultValues: { title: '', description: '', imageUris: [] },
+  });
+
+  const onSubmit = useCallback(
+    (formValues: FormValues) => createPost.mutate(formValues),
+    [createPost],
+  );
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <CustomButton
+          label="저장"
+          size="medium"
+          variant="standard"
+          onPress={postForm.handleSubmit(onSubmit)}
+        />
+      ),
+    });
+  }, [navigation, postForm, onSubmit]);
 
   return (
-    <View style={styles.container}>
-      <FormProvider {...postForm}>
+    <FormProvider {...postForm}>
+      <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <TitleInput />
         <DescriptionInput />
-      </FormProvider>
-    </View>
+      </KeyboardAwareScrollView>
+    </FormProvider>
   );
 }
 
