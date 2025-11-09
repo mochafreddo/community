@@ -19,7 +19,7 @@ export default function PostDetailScreen() {
 
   return (
     <AuthRoute>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={['bottom']}>
         <KeyboardAwareScrollView
           contentContainerStyle={styles.awareScrollViewContainer}
         >
@@ -60,13 +60,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   commentInputContainer: {
-    width: '100%',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: colors.WHITE,
     borderTopColor: colors.GRAY_200,
     borderTopWidth: StyleSheet.hairlineWidth,
-    backgroundColor: colors.WHITE,
-    padding: 16,
-    bottom: 0,
-    position: 'absolute',
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 8,
   },
   inputButtonContainer: {
     backgroundColor: colors.ORANGE_600,
