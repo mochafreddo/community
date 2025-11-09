@@ -17,7 +17,10 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <FeedList />
       {auth.id && (
-        <Pressable style={styles.writeButton} onPress={() => router.push('/post/write')}>
+        <Pressable
+          style={styles.writeButton}
+          onPress={() => router.push('/post/write')}
+        >
           <Ionicons name="pencil" size={32} color={colors.WHITE} />
         </Pressable>
       )}

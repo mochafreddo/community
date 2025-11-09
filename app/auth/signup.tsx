@@ -36,15 +36,14 @@ export default function SignupScreen() {
         <PasswordInput submitBehavior="submit" />
         <PasswordConfirmInput />
       </View>
-      <FixedBottomCTA label="회원가입하기" onPress={signupForm.handleSubmit(onSubmit)} />
+      <FixedBottomCTA
+        label="회원가입하기"
+        onPress={signupForm.handleSubmit(onSubmit)}
+      />
     </FormProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    margin: 16,
-    gap: 16,
-  },
+  container: { flex: 1, margin: 16, gap: 16 },
 });

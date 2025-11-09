@@ -26,7 +26,10 @@ export default function LoginScreen() {
         <EmailInput />
         <PasswordInput />
       </View>
-      <FixedBottomCTA label="로그인하기" onPress={loginForm.handleSubmit(onSubmit)} />
+      <FixedBottomCTA
+        label="로그인하기"
+        onPress={loginForm.handleSubmit(onSubmit)}
+      />
     </FormProvider>
   );
 }

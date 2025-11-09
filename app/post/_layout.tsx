@@ -1,3 +1,5 @@
+import { Pressable } from 'react-native';
+
 import { Link, router, Stack } from 'expo-router';
 
 import { Feather } from '@expo/vector-icons';
@@ -21,6 +23,22 @@ export default function PostLayout() {
             <Link href={'/'} replace>
               <Feather name="arrow-left" size={28} color={'black'} />
             </Link>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="[id]"
+        options={{
+          headerShown: true,
+          headerTitle: '',
+          headerLeft: () => (
+            <Pressable
+              onPress={() =>
+                router.canGoBack() ? router.back() : router.replace('/')
+              }
+            >
+              <Feather name="arrow-left" size={28} color={'black'} />
+            </Pressable>
           ),
         }}
       />

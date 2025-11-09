@@ -17,7 +17,11 @@ export default function TabLayout() {
         options={{
           title: '홈',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'home-sharp' : 'home-outline'} size={25} color={color} />
+            <Ionicons
+              name={focused ? 'home-sharp' : 'home-outline'}
+              size={25}
+              color={color}
+            />
           ),
         }}
       />
@@ -39,7 +43,11 @@ export default function TabLayout() {
         options={{
           title: '설정',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'settings' : 'settings-outline'} size={25} color={color} />
+            <Ionicons
+              name={focused ? 'settings' : 'settings-outline'}
+              size={25}
+              color={color}
+            />
           ),
         }}
       />

@@ -8,7 +8,9 @@ interface PasswordInputProps {
   submitBehavior?: TextInputProps['submitBehavior'];
 }
 
-export const PasswordInput = ({ submitBehavior = 'blurAndSubmit' }: PasswordInputProps) => {
+export const PasswordInput = ({
+  submitBehavior = 'blurAndSubmit',
+}: PasswordInputProps) => {
   const { control, setFocus } = useFormContext();
 
   return (

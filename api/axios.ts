@@ -7,8 +7,6 @@ const baseUrls = {
   ios: 'http://localhost:3030',
 };
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: Platform.OS === 'ios' ? baseUrls.ios : baseUrls.android,
 });
-
-export default axiosInstance;

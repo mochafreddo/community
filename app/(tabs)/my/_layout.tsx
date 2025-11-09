@@ -7,17 +7,12 @@ export default function MyLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        contentStyle: {
-          backgroundColor: colors.WHITE,
-        },
+        contentStyle: { backgroundColor: colors.WHITE },
       }}
     >
       <Stack.Screen
         name="index"
-        options={{
-          headerShown: false,
-          title: '내 프로필',
-        }}
+        options={{ headerShown: false, title: '내 프로필' }}
       />
     </Stack>
   );

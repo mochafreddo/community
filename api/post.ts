@@ -1,6 +1,6 @@
 import { CreatePostDto, Post } from '@/types';
 
-import axiosInstance from './axios';
+import { axiosInstance } from './axios';
 
 export async function createPost(body: CreatePostDto) {
   const { data } = await axiosInstance.post('/posts', body);

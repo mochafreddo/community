@@ -1,7 +1,7 @@
 import { Profile } from '@/types';
 import { getSecureStore } from '@/utils/secureStore';
 
-import axiosInstance from './axios';
+import { axiosInstance } from './axios';
 
 type RequestUser = {
   email: string;
@@ -10,13 +10,11 @@ type RequestUser = {
 
 async function postSignup(body: RequestUser): Promise<void> {
   const { data } = await axiosInstance.post('/auth/signup', body);
-
   return data;
 }
 
 async function postLogin(body: RequestUser): Promise<{ accessToken: string }> {
   const { data } = await axiosInstance.post('/auth/signin', body);
-
   return data;
 }
 
@@ -30,4 +28,4 @@ async function getMe(): Promise<Profile> {
   return data;
 }
 
-export { postSignup, postLogin, getMe };
+export { getMe, postLogin, postSignup };

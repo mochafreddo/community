@@ -7,17 +7,12 @@ export default function SettingLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        contentStyle: {
-          backgroundColor: colors.WHITE,
-        },
+        contentStyle: { backgroundColor: colors.WHITE },
       }}
     >
       <Stack.Screen
         name="index"
-        options={{
-          headerShown: false,
-          title: '설정',
-        }}
+        options={{ headerShown: false, title: '설정' }}
       />
     </Stack>
   );
