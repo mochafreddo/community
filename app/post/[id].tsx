@@ -1,47 +1,86 @@
+import { useRef, useState } from 'react';
+
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { useLocalSearchParams } from 'expo-router';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 import { AuthRoute } from '@/components/AuthRoute';
+import { CommentItem } from '@/components/CommentItem';
 import { FeedItem } from '@/components/FeedItem';
 import { InputField } from '@/components/InputField';
 import { colors } from '@/constants';
+import { useCreateComment } from '@/hooks/queries/useCreateComment';
 import { useGetPost } from '@/hooks/queries/useGetPost';
 
 export default function PostDetailScreen() {
   const { id } = useLocalSearchParams();
   const { data: post, isPending, isError } = useGetPost(Number(id));
+  const createComment = useCreateComment();
+  const [content, setContent] = useState<string>('');
+  const scrollRef = useRef<ScrollView | null>(null);
+  const insets = useSafeAreaInsets();
 
   if (isPending || isError) return <></>;
 
+  const handleSubmitComment = () => {
+    if (!content.trim()) return;
+    createComment.mutate({ postId: post.id, content });
+    setContent('');
+    setTimeout(() => scrollRef.current?.scrollToEnd(), 500);
+  };
+
   return (
     <AuthRoute>
-      <SafeAreaView style={styles.container} edges={['bottom']}>
+      <SafeAreaView
+        style={styles.container}
+        edges={['bottom', 'left', 'right']}
+      >
         <KeyboardAwareScrollView
           contentContainerStyle={styles.awareScrollViewContainer}
         >
-          <ScrollView style={styles.scrollViewContainer}>
-            <View style={{ marginTop: 12 }}>
+          <ScrollView
+            ref={scrollRef}
+            style={{ marginBottom: insets.bottom + 40 }}
+          >
+            <View>
               <FeedItem post={post} isDetail />
               <Text style={styles.commentCount}>
                 댓글 {post.commentCount}개
               </Text>
             </View>
-          </ScrollView>
 
-          <View style={styles.commentInputContainer}>
-            <InputField
-              rightChild={
-                <Pressable style={styles.inputButtonContainer}>
-                  <Text style={styles.inputButtonText}>등록</Text>
-                </Pressable>
-              }
-            />
-          </View>
+            {post.comments?.map((comment) => (
+              <CommentItem key={comment.id} comment={comment} />
+            ))}
+          </ScrollView>
         </KeyboardAwareScrollView>
+
+        <View
+          style={[styles.commentInputContainer, { bottom: insets.bottom + 8 }]}
+        >
+          <InputField
+            value={content}
+            returnKeyType="send"
+            onSubmitEditing={handleSubmitComment}
+            onChangeText={(text) => setContent(text)}
+            placeholder="댓글을 남겨보세요."
+            rightChild={
+              <Pressable
+                disabled={!content}
+                style={styles.inputButtonContainer}
+                onPress={handleSubmitComment}
+              >
+                <Text style={styles.inputButtonText}>등록</Text>
+              </Pressable>
+            }
+          />
+        </View>
       </SafeAreaView>
     </AuthRoute>
   );
@@ -49,8 +88,7 @@ export default function PostDetailScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.WHITE },
-  awareScrollViewContainer: { flex: 1, backgroundColor: colors.GRAY_200 },
-  scrollViewContainer: { backgroundColor: colors.GRAY_200 },
+  awareScrollViewContainer: { flex: 1, backgroundColor: colors.WHITE },
   commentCount: {
     marginTop: 12,
     backgroundColor: colors.WHITE,
@@ -63,7 +101,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 0,
     backgroundColor: colors.WHITE,
     borderTopColor: colors.GRAY_200,
     borderTopWidth: StyleSheet.hairlineWidth,

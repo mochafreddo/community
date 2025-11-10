@@ -34,7 +34,9 @@ export const FeedItem = ({ post, isDetail = false }: FeedItemProps) => {
       (selectedIndex?: number) => {
         switch (selectedIndex) {
           case destructiveButtonIndex:
-            deletePost.mutate(post.id);
+            deletePost.mutate(post.id, {
+              onSuccess: () => isDetail && router.back(),
+            });
             break;
           case 1:
             router.push(`/post/update/${post.id}`);

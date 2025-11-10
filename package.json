@@ -59,5 +59,8 @@
     "prettier": "^3.6.2",
     "typescript": "~5.9.3"
   },
-  "private": true
+  "private": true,
+  "volta": {
+    "node": "24.11.0"
+  }
 }
