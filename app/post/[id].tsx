@@ -1,6 +1,14 @@
-import { useRef, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Keyboard,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 
 import { useLocalSearchParams } from 'expo-router';
 
@@ -25,12 +33,35 @@ export default function PostDetailScreen() {
   const [content, setContent] = useState<string>('');
   const scrollRef = useRef<ScrollView | null>(null);
   const insets = useSafeAreaInsets();
+  const inputRef = useRef<TextInput | null>(null);
+  const [parentCommentId, setParentCommentId] = useState<number | null>(null);
 
   if (isPending || isError) return <></>;
 
+  const handleReply = (commentId: number) => {
+    setParentCommentId(commentId);
+    inputRef.current?.focus();
+  };
+
+  const handleCancelReply = () => {
+    setParentCommentId(null);
+    Keyboard.dismiss();
+  };
+
   const handleSubmitComment = () => {
     if (!content.trim()) return;
-    createComment.mutate({ postId: post.id, content });
+
+    const commentData = { postId: post.id, content };
+
+    if (parentCommentId) {
+      createComment.mutate({ ...commentData, parentCommentId });
+      setContent('');
+      handleCancelReply();
+      return;
+    }
+
+    createComment.mutate(commentData);
+
     setContent('');
     setTimeout(() => scrollRef.current?.scrollToEnd(), 500);
   };
@@ -56,7 +87,17 @@ export default function PostDetailScreen() {
             </View>
 
             {post.comments?.map((comment) => (
-              <CommentItem key={comment.id} comment={comment} />
+              <Fragment key={comment.id}>
+                <CommentItem
+                  parentCommentId={parentCommentId}
+                  onReply={() => handleReply(comment.id)}
+                  onCancelReply={handleCancelReply}
+                  comment={comment}
+                />
+                {comment.replies.map((reply) => (
+                  <CommentItem key={reply.id} comment={reply} isReply />
+                ))}
+              </Fragment>
             ))}
           </ScrollView>
         </KeyboardAwareScrollView>
@@ -65,11 +106,14 @@ export default function PostDetailScreen() {
           style={[styles.commentInputContainer, { bottom: insets.bottom + 8 }]}
         >
           <InputField
+            ref={inputRef}
             value={content}
             returnKeyType="send"
             onSubmitEditing={handleSubmitComment}
             onChangeText={(text) => setContent(text)}
-            placeholder="댓글을 남겨보세요."
+            placeholder={
+              parentCommentId ? '답글 남기는 중...' : '댓글을 남겨보세요.'
+            }
             rightChild={
               <Pressable
                 disabled={!content}

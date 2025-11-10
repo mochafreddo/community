@@ -7,6 +7,7 @@ import { Stack } from 'expo-router';
 
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
+import { useReactQueryDevTools } from '@dev-plugins/react-query';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
@@ -18,6 +19,7 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
+  useReactQueryDevTools(queryClient);
 
   if (!loaded) {
     // Async font loading only occurs in development.
