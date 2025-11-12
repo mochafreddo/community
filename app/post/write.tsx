@@ -9,6 +9,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import { CustomButton } from '@/components/CustomButton';
 import { DescriptionInput } from '@/components/DescriptionInput';
+import { ImagePreviewList } from '@/components/ImagePreviewList';
 import { PostWriteFooter } from '@/components/PostWriteFooter';
 import { TitleInput } from '@/components/TitleInput';
 import { useCreatePost } from '@/hooks/queries/useCreatePost';
@@ -28,6 +29,8 @@ export default function PostWriteScreen() {
     [createPost],
   );
 
+  console.log('postForm :>> ', postForm.watch().imageUris);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -46,6 +49,7 @@ export default function PostWriteScreen() {
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <TitleInput />
         <DescriptionInput />
+        <ImagePreviewList imageUris={postForm.watch().imageUris} />
       </KeyboardAwareScrollView>
 
       <PostWriteFooter />

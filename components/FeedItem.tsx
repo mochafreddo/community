@@ -10,6 +10,7 @@ import { useAuth } from '@/hooks/queries/useAuth';
 import { useDeletePost } from '@/hooks/queries/useDeletePost';
 import { Post } from '@/types';
 
+import { ImagePreviewList } from './ImagePreviewList';
 import { Profile } from './Profile';
 
 interface FeedItemProps {
@@ -79,6 +80,7 @@ export const FeedItem = ({ post, isDetail = false }: FeedItemProps) => {
         <Text numberOfLines={3} style={styles.description}>
           {post.description}
         </Text>
+        <ImagePreviewList imageUris={post.imageUris} />
       </View>
       <View style={styles.menuContainer}>
         <Pressable style={styles.menu}>
